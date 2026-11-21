@@ -121,7 +121,10 @@ fun HomeScreen(
             }
 
             Spacer(modifier = Modifier.height(25.dp))
+            
+ShizukuConnectCard()
 
+Spacer(modifier = Modifier.height(20.dp))
             Text(
                 text = "Island Features",
                 color = Color.White,
