@@ -20,7 +20,7 @@ class IslandService : Service() {
 
     private lateinit var windowManager: WindowManager
     private var islandView: LinearLayout? = null
-private var albumArtView: ImageView? = null
+private var equalizerView: EqualizerView? = null
 private val musicReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         val art = if (android.os.Build.VERSION.SDK_INT >= 33) {
