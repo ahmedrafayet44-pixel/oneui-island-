@@ -32,8 +32,9 @@ kotlin {
 
 dependencies {
    implementation("dev.rikka.shizuku:api:13.1.5")
-    implementation("dev.rikka.shizuku:provider:13.1.5") implementation("androidx.core:core-ktx:1.15.0")
-    implementation("androidx.activity:activity-compose:1.10.1")
+    implementation("dev.rikka.shizuku:provider:13.1.5") 
+implementation("androidx.core:core-ktx:1.15.0")
+implementation("androidx.activity:activity-compose:1.10.1")
 
     implementation(platform(
         "androidx.compose:compose-bom:2025.02.00"
