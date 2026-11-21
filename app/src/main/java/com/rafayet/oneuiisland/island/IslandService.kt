@@ -13,20 +13,26 @@ import android.os.IBinder
 import android.view.Gravity
 import android.view.WindowManager
 import android.widget.TextView
-
+import android.graphics.Bitmap
+import android.widget.LinearLayout
+import android.widget.ImageView
 class IslandService : Service() {
 
     private lateinit var windowManager: WindowManager
-    private var islandView: TextView? = null
-
-    private val musicReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val title = intent?.getStringExtra("title") ?: return
-            val artist = intent.getStringExtra("artist") ?: "Unknown Artist"
-
-            islandView?.text = "♫  $title\n$artist"
+    private var islandView: LinearLayout? = null
+private var albumArtView: ImageView? = null
+private val musicReceiver = object : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+        val art = if (android.os.Build.VERSION.SDK_INT >= 33) {
+            intent?.getParcelableExtra("art", Bitmap::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent?.getParcelableExtra("art") as? Bitmap
         }
+
+        albumArtView?.setImageBitmap(art)
     }
+}
 
     override fun onCreate() {
         super.onCreate()
@@ -36,7 +42,7 @@ class IslandService : Service() {
 
         val filter = IntentFilter("com.rafayet.oneuiisland.MUSIC_UPDATE")
         registerReceiver(
-            musicReceiver,
+            musicReceivpr)
             filter,
             Context.RECEIVER_NOT_EXPORTED
         )
@@ -45,20 +51,50 @@ class IslandService : Service() {
     }
 
     private fun showIsland() {
-        val view = TextView(this).apply {
-            text = "●  OneUI Island"
-            textSize = 13f
-            setTextColor(Color.WHITE)
-            typeface = Typeface.DEFAULT_BOLD
-            gravity = Gravity.CENTER
-
-            background = GradientDrawable().apply {
-                setColor(Color.BLACK)
-                cornerRadius = 100f
-            }
-
-            setPadding(35, 20, 35, 20)
+    val artView = ImageView(this).apply {
+        scaleType = ImageView.ScaleType.CENTER_CROP
+        background = GradientDrawable().apply {
+            setColor(Color.DKGRAY)
+            cornerRadius = 50f
         }
+    }
+
+    albumArtView = artView
+
+    val equalizer = TextView(this).apply {
+        text = "▂ ▅ ▃ ▆"
+        textSize = 16f
+        setTextColor(Color.WHITE)
+        gravity = Gravity.CENTER
+    }
+
+    val layout = LinearLayout(this).apply {
+        orientation = LinearLayout.HORIZONTAL
+        gravity = Gravity.CENTER
+        background = GradientDrawable().apply {
+            setColor(Color.BLACK)
+            cornerRadius = 100f
+        }
+        setPadding(8, 6, 12, 6)
+
+        addView(artView, LinearLayout.LayoutParams(36, 36))
+        addView(equalizer, LinearLayout.LayoutParams(65, 36))
+    }
+
+    val params = WindowManager.LayoutParams(
+        125,
+        48,
+        WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+        PixelFormat.TRANSLUCENT
+    )
+
+    params.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+    params.y = 12
+
+    windowManager.addView(layout, params)
+    islandView = layout
+    }
 
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
@@ -76,14 +112,16 @@ class IslandService : Service() {
     }
 
     override fun onDestroy() {
-        unregisterReceiver(musicReceiver)
+    unregisterReceiver(musicReceiver)
 
-        islandView?.let {
-            windowManager.removeView(it)
-        }
+    islandView?.let {
+        windowManager.removeView(it)
+    }
 
-        islandView = null
-        super.onDestroy()
+    albumArtView = null
+    islandView = null
+
+    super.onDestroy()
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
