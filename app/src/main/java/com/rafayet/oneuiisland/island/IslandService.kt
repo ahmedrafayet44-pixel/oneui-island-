@@ -94,21 +94,9 @@ private val musicReceiver = object : BroadcastReceiver() {
 
     windowManager.addView(layout, params)
     islandView = layout
-    }
 
-        val params = WindowManager.LayoutParams(
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-            PixelFormat.TRANSLUCENT
-        )
 
-        params.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-        params.y = 12
-
-        windowManager.addView(view, params)
-        islandView = view
+        
     }
 
     override fun onDestroy() {
