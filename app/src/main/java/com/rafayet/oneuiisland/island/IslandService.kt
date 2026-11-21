@@ -32,7 +32,8 @@ private val musicReceiver = object : BroadcastReceiver() {
         }
 
         albumArtView?.setImageBitmap(art)
-        val isPlaying = intent?.getBooleanExtra("isPlaying", false) ?: false
+        val hasPlaybackState = intent?.hasExtra("isPlaying") == true
+val isPlaying = intent?.getBooleanExtra("isPlaying", false) ?: false
 
 if (isPlaying) {
     equalizerView?.visibility = android.view.View.VISIBLE
