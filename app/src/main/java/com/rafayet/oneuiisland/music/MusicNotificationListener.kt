@@ -2,6 +2,7 @@ package com.rafayet.oneuiisland.music
 
 import android.content.ComponentName
 import android.content.Intent
+import android.graphics.Bitmap
 import android.media.MediaMetadata
 import android.media.session.MediaController
 import android.service.notification.NotificationListenerService
@@ -51,16 +52,22 @@ class MusicNotificationListener : NotificationListenerService() {
     }
 
     private fun sendMusicInfo(metadata: MediaMetadata?) {
-        val title = metadata?.getString(MediaMetadata.METADATA_KEY_TITLE)
-            ?: return
-        val artist = metadata.getString(MediaMetadata.METADATA_KEY_ARTIST)
-            ?: "Unknown Artist"
+    val title = metadata?.getString(MediaMetadata.METADATA_KEY_TITLE)
+        ?: return
 
-        val intent = Intent("com.rafayet.oneuiisland.MUSIC_UPDATE")
-        intent.setPackage(packageName)
-        intent.putExtra("title", title)
-        intent.putExtra("artist", artist)
-        sendBroadcast(intent)
+    val artist = metadata.getString(MediaMetadata.METADATA_KEY_ARTIST)
+        ?: "Unknown Artist"
+
+    val art = metadata.getBitmap(MediaMetadata.METADATA_KEY_ART)
+        ?: metadata.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART)
+
+    val intent = Intent("com.rafayet.oneuiisland.MUSIC_UPDATE")
+    intent.setPackage(packageName)
+    intent.putExtra("title", title)
+    intent.putExtra("artist", artist)
+    intent.putExtra("art", art)
+    sendBroadcast(intent)
+    }
     }
 
     override fun onListenerDisconnected() {
