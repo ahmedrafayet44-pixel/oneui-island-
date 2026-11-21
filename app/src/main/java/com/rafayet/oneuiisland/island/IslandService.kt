@@ -32,6 +32,16 @@ private val musicReceiver = object : BroadcastReceiver() {
         }
 
         albumArtView?.setImageBitmap(art)
+        val isPlaying = intent?.getBooleanExtra("isPlaying", false) ?: false
+
+if (isPlaying) {
+    equalizerView?.visibility = android.view.View.VISIBLE
+    equalizerView?.startAnimation()
+} else {
+    equalizerView?.stopAnimation()
+    equalizerView?.visibility = android.view.View.GONE
+    albumArtView?.setImageDrawable(null)
+}
     }
 }
 
