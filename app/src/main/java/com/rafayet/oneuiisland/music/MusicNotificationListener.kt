@@ -67,7 +67,7 @@ class MusicNotificationListener : NotificationListenerService() {
     intent.putExtra("artist", artist)
     intent.putExtra("art", art)
     sendBroadcast(intent)
-    }
+    
     }
 
     override fun onListenerDisconnected() {
