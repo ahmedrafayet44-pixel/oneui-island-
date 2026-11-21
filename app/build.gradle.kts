@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.rafayet.oneuiisland"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
