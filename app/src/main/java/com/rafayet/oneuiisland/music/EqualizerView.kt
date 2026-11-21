@@ -48,7 +48,7 @@ class EqualizerView(context: Context) : View(context) {
         val spacing = width / (bars + 1).toFloat()
 
         for (i in 0 until bars) {
-            val wave = sin((progress * 6.28f) + i * 1.5f)
+            val wave = sin((progress * 6.28f + i * 1.5f).toDouble()).toFloat()
             val barHeight = 8f + ((wave + 1f) * 13f)
 
             val x = spacing * (i + 1)
