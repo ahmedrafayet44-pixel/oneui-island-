@@ -42,7 +42,7 @@ private val musicReceiver = object : BroadcastReceiver() {
 
         val filter = IntentFilter("com.rafayet.oneuiisland.MUSIC_UPDATE")
         registerReceiver(
-            musicReceivpr)
+            musicReceivpr,
             filter,
             Context.RECEIVER_NOT_EXPORTED
         )
