@@ -19,7 +19,17 @@
         <service
     android:name=".island.IslandService"
     android:exported="false" />
+<service
+    android:name=".music.MusicNotificationListener"
+    android:label="OneUI Island Music"
+    android:exported="true"
+    android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
 
+    <intent-filter>
+        <action android:name="android.service.notification.NotificationListenerService" />
+    </intent-filter>
+
+</service>
         <activity
             android:name=".MainActivity"
             android:exported="true">
