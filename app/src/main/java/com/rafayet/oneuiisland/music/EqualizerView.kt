@@ -29,11 +29,11 @@ class EqualizerView(context: Context) : View(context) {
             progress = it.animatedValue as Float
             invalidate()
         }
-    }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        animator.start()
+    }
+    override fun onDetachedFromWindow() {
+    animator.cancel()
+    super.onDetachedFromWindow()
     }
 fun startAnimation() {
     if (!animator.isStarted) {
