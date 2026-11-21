@@ -1,5 +1,5 @@
 package com.rafayet.oneuiisland.island
-
+import com.rafayet.oneuiisland.music.EqualizerView
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -61,11 +61,7 @@ private val musicReceiver = object : BroadcastReceiver() {
 
     albumArtView = artView
 
-    val equalizer = TextView(this).apply {
-        text = "▂ ▅ ▃ ▆"
-        textSize = 16f
-        setTextColor(Color.WHITE)
-        gravity = Gravity.CENTER
+val equalizer = EqualizerView(this)
     }
 
     val layout = LinearLayout(this).apply {
