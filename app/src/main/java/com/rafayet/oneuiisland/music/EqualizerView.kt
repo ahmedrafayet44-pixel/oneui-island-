@@ -35,13 +35,18 @@ class EqualizerView(context: Context) : View(context) {
         super.onAttachedToWindow()
         animator.start()
     }
-
-    override fun onDetachedFromWindow() {
-        animator.cancel()
-        super.onDetachedFromWindow()
+fun startAnimation() {
+    if (!animator.isStarted) {
+        animator.start()
     }
+}
 
-    override fun onDraw(canvas: Canvas) {
+fun stopAnimation() {
+    animator.cancel()
+    progress = 0f
+    invalidate()
+}
+        override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         val centerY = height / 2f
