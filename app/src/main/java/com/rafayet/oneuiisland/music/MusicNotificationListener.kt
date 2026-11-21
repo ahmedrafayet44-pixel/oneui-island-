@@ -1,5 +1,5 @@
 package com.rafayet.oneuiisland.music
-
+import android.media.session.PlaybackState
 import android.content.ComponentName
 import android.content.Intent
 import android.graphics.Bitmap
@@ -46,9 +46,22 @@ class MusicNotificationListener : NotificationListenerService() {
     }
 
     private val callback = object : MediaController.Callback() {
-        override fun onMetadataChanged(metadata: MediaMetadata?) {
-            sendMusicInfo(metadata)
-        }
+
+    override fun onMetadataChanged(metadata: MediaMetadata?) {
+        sendMusicInfo(metadata)
+    }
+
+    override fun onPlaybackStateChanged(state: PlaybackState?) {
+        val intent = Intent("com.rafayet.oneuiisland.MUSIC_UPDATE")
+        intent.setPackage(packageName)
+
+        intent.putExtra(
+            "isPlaying",
+            state?.state == PlaybackState.STATE_PLAYING
+        )
+
+        sendBroadcast(intent)
+    }
     }
 
     private fun sendMusicInfo(metadata: MediaMetadata?) {
