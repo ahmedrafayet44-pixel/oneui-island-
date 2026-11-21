@@ -63,7 +63,8 @@ private val musicReceiver = object : BroadcastReceiver() {
     albumArtView = artView
 
 val equalizer = EqualizerView(this)
-
+equalizerView = equalizer
+equalizer.visibility = android.view.View.GONE
 
     val layout = LinearLayout(this).apply {
         orientation = LinearLayout.HORIZONTAL
