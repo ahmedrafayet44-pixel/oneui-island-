@@ -1,6 +1,7 @@
 package com.rafayet.oneuiisland
 
 import android.content.Intent
+import com.rafayet.oneuiisland.shizuku.ShizukuConnectCard
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
